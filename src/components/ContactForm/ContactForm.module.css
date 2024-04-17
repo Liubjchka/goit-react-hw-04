@@ -1,0 +1,42 @@
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 16px;
+  width: 252px;
+  border: 1.5px solid black;
+  border-radius: 4px;
+  padding: 16px 24px;
+  margin-bottom: 24px;
+}
+
+.label {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.input {
+  border-radius: 4px;
+  height: 24px;
+  transition: border-color 0.3s ease;
+}
+
+.input:focus {
+  outline: none !important;
+  border-color: blue;
+  box-shadow: 0 0 10px #719ece;
+}
+
+.input:hover {
+  border-color: blue;
+}
+
+.errorMsg {
+  color: red;
+}
+
+.mainBtn {
+  margin: 0px auto;
+  width: 120px;
+}

@@ -1,0 +1,20 @@
+.box {
+  margin-bottom: 24px;
+}
+
+.input {
+  width: 300px;
+  border-radius: 4px;
+  height: 24px;
+  transition: border-color 0.3s ease;
+}
+
+.input:focus {
+  outline: none !important;
+  border-color: blue;
+  box-shadow: 0 0 10px #719ece;
+}
+
+.input:hover {
+  border-color: blue;
+}
