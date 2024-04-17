@@ -1,21 +1,28 @@
-import css from "./SearchBox.module.css";
+import css from "./SearchBar.module.css";
+import { BsSearch } from "react-icons/bs";
 
-const SearchBox = ({ filter, getFilter }) => {
-  const handleChange = (event) => {
-    getFilter(event.target.value);
-  };
-
+const SearchBar = () => {
   return (
-    <div className={css.box}>
-      <p>Find contacts by name</p>
-      <input
-        className={css.input}
-        type="text"
-        onChange={handleChange}
-        value={filter}
-      />
+    <div className={css.wrapper}>
+      <header>
+        <form className={css.form}>
+          <label>
+            <BsSearch />
+            <input
+              className={css.input}
+              type="text"
+              //  { autocomplete="off"
+              //   autofocus}
+              placeholder="Search images and photos"
+            />
+          </label>
+          <button className={css.searchBtn} type="submit">
+            Search
+          </button>
+        </form>
+      </header>
     </div>
   );
 };
 
-export default SearchBox;
+export default SearchBar;
