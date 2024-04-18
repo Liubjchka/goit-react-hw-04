@@ -1,19 +1,35 @@
-// import { useEffect, useState } from "react";
-// import ContactForm from "../ContactForm/ContactForm";
-// import ContactList from "../ContactList/ContactList";
-// import SearchBox from "../SearchBar/SearchBar";
-
-import ImageGallery from "../ImageGallery/ImageGallery";
 import SearchBar from "../SearchBar/SearchBar";
+import { getImages } from "../../apiService/images";
+import { useEffect, useState } from "react";
+
 import "./App.css";
 
-const App = () => {
+const Images = () => {
+  const [query, setQuery] = useState("");
+  const [page, setPage] = useState(1);
+
+  const onFormSubmit = (query) => {
+    setQuery(query);
+    setPage(1);
+  };
+
+  useEffect(() => {
+    const imagesFromApi = async () => {
+      try {
+        const images = await getImages(query, page);
+        console.log(images);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    imagesFromApi();
+  }, [query, page]);
+
   return (
     <div>
-      <SearchBar />
-      <ImageGallery />
+      <SearchBar onSubmit={onFormSubmit} />
     </div>
   );
 };
 
-export default App;
+export default Images;
