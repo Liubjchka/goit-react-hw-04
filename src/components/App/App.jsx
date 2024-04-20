@@ -23,7 +23,7 @@ const Images = () => {
       }
     };
     imagesFromApi();
-  }, [query, page]);
+  }, [page, query]);
 
   return (
     <div>
