@@ -29,6 +29,7 @@ const Images = () => {
         }
         //Uncaught TypeError: results is not iterable    Why?
         //Cannot read properties of undefined (reading 'results')
+        //Проблема була у фігурних дужках в Results
       } catch (error) {
         console.log(error.message);
       }
