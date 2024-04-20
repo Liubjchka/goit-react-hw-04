@@ -21,10 +21,14 @@ const Images = () => {
 
     const imagesFromApi = async () => {
       try {
-        const { results } = await getImages(page, query);
-        if (results) {
+        const results = await getImages(page, query);
+        if (results && Array.isArray(results)) {
           setImages((prevImages) => [...prevImages, ...results]);
+        } else {
+          console.log("No results found or results is not iterable");
         }
+        //Uncaught TypeError: results is not iterable    Why?
+        //Cannot read properties of undefined (reading 'results')
       } catch (error) {
         console.log(error.message);
       }
