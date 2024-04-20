@@ -1,16 +1,16 @@
-// import { useState } from "react";
 import ImageCard from "../ImageCard/ImageCard";
 
-const ImageGallery = () => {
+const ImageGallery = ({ images }) => {
   return (
-    <div>
-      <ul>
-        {/* Набір елементів списку із зображеннями */}
-        <li>
-          <ImageCard />
-        </li>
-      </ul>
-    </div>
+    <ul>
+      {images.map(({ id, alt_description, urls }) => {
+        return (
+          <li key={id}>
+            <ImageCard alt={alt_description} url={urls.small} />
+          </li>
+        );
+      })}
+    </ul>
   );
 };
 

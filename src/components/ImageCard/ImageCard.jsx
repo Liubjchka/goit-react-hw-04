@@ -1,8 +1,13 @@
-const ImageCard = () => {
+import css from "./ImageCard.module.css";
+
+const ImageCard = ({ alt, url }) => {
   return (
-    <div>
-      <img src="" alt="" />
-    </div>
+    <img
+      className={css.img}
+      // style={{ backgroundColor: color, borderColor: color }}
+      src={url}
+      alt={alt}
+    />
   );
 };
 
