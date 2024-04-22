@@ -1,28 +1,26 @@
 import ImageCard from "../ImageCard/ImageCard";
+import css from "./ImageGallery.module.css";
 
 const ImageGallery = ({ images }) => {
   return (
-    <ul>
-      {images.map(
-        ({ id, alt_description, urls, color, likes, promoted_at }) => {
-          return (
-            <li key={id}>
-              <ImageCard
-                alt={alt_description}
-                url={urls.small}
-                // urlLarge={urls.regular}
-
-                color={color}
-                likes={likes}
-                promoted_at={promoted_at}
-              />
+    <ul className={css.ul}>
+      {images.map(({ id, alt_description, urls, likes, created_at }) => {
+        return (
+          <li className={css.li} key={id}>
+            <ImageCard
+              alt={alt_description}
+              url={urls.small}
+              // urlLarge={urls.regular}
+              likes={likes}
+              created_at={created_at}
+            />
+            <div className={css.info}>
               <p>{likes}</p>
-              <p>{promoted_at``}</p>
-              <p>{alt_description}</p>
-            </li>
-          );
-        }
-      )}
+              <p>{created_at}</p>
+            </div>
+          </li>
+        );
+      })}
     </ul>
   );
 };
