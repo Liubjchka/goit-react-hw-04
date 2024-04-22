@@ -38,11 +38,21 @@ const Images = () => {
     imagesFromApi();
   }, [page, query]);
 
+  const onLoadMore = () => {
+    setPage(page + 1);
+  };
+
+  // const offLoadMore = () => {
+  //   setPage(Math);
+  // };
+
   return (
     <>
       <SearchBar onSubmit={onFormSubmit} />
       <ImageGallery images={images} />
-      <LoadMoreBtn>Load more</LoadMoreBtn>
+      {images.length > 0 && (
+        <LoadMoreBtn onClick={onLoadMore}>Load more</LoadMoreBtn>
+      )}
     </>
   );
 };
