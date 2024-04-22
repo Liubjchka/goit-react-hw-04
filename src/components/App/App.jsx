@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import "./App.css";
 import ImageGallery from "../ImageGallery/ImageGallery";
+import { LoadMoreBtn } from "../LoadMoreBtn/LoadMoreBtn";
 
 const Images = () => {
   const [query, setQuery] = useState("");
@@ -41,6 +42,7 @@ const Images = () => {
     <>
       <SearchBar onSubmit={onFormSubmit} />
       <ImageGallery images={images} />
+      <LoadMoreBtn>Load more</LoadMoreBtn>
     </>
   );
 };

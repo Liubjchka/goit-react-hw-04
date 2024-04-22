@@ -3,6 +3,7 @@ import axios from "axios";
 const API_KEY = "uFwH4fdMNd8GZx3KXV2zP6cZrDYT9wqBDv039lyrpUU";
 const params = {
   orientation: "landscape",
+  per_page: 12,
 };
 
 export const getImages = async (page, query) => {
