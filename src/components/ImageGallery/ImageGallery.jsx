@@ -1,5 +1,6 @@
 import ImageCard from "../ImageCard/ImageCard";
 import css from "./ImageGallery.module.css";
+import { AiOutlineLike } from "react-icons/ai";
 
 const ImageGallery = ({ images }) => {
   return (
@@ -15,7 +16,9 @@ const ImageGallery = ({ images }) => {
               created_at={created_at}
             />
             <div className={css.info}>
-              <p>{likes}</p>
+              <p>
+                {likes} <AiOutlineLike />
+              </p>
               <p>{created_at}</p>
             </div>
           </li>
