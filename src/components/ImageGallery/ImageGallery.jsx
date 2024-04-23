@@ -16,7 +16,6 @@ const ImageGallery = ({ images }) => {
               alt={alt_description}
               url={urls.small}
               color={color}
-              // urlLarge={urls.regular}
               likes={likes}
             />
             <div className={css.info}>

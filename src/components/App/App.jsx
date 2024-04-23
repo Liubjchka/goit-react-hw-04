@@ -5,11 +5,16 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import { LoadMoreBtn } from "../LoadMoreBtn/LoadMoreBtn";
+import ImageModal from "../ImageModal/ImageModal";
+import useToggle from "../../hooks/useToggle";
 
 const Images = () => {
+  const { isOpen, open, close } = useToggle();
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const onFormSubmit = (query) => {
     setQuery(query);
@@ -22,17 +27,13 @@ const Images = () => {
 
     const imagesFromApi = async () => {
       try {
+        setLoading(true);
         const results = await getImages(page, query);
-        if (results && Array.isArray(results)) {
-          setImages((prevImages) => [...prevImages, ...results]);
-        } else {
-          console.log("No results found or results is not iterable");
-        }
-        //Uncaught TypeError: results is not iterable    Why?
-        //Cannot read properties of undefined (reading 'results')
-        //Проблема була у фігурних дужках в Results
+        setImages((prevImages) => [...prevImages, ...results]);
       } catch (error) {
-        console.log(error.message);
+        setIsError(true);
+      } finally {
+        setLoading(false);
       }
     };
     imagesFromApi();
@@ -42,14 +43,15 @@ const Images = () => {
     setPage(page + 1);
   };
 
-  // const offLoadMore = () => {
-  //   setPage(Math);
-  // };
-
   return (
     <>
       <SearchBar onSubmit={onFormSubmit} />
-      <ImageGallery images={images} />
+      <ImageGallery images={images} onClick={open} />
+      <ImageModal visible={isOpen} onClose={close} />
+      {loading && <p>Loading data, please wait...</p>}
+      {isError && (
+        <p>Whoops, something went wrong! Please try reloading this page!</p>
+      )}
       {images.length > 0 && (
         <LoadMoreBtn onClick={onLoadMore}>Load more</LoadMoreBtn>
       )}
