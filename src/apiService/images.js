@@ -13,13 +13,9 @@ export const getImages = async (page, query) => {
       { params }
     );
 
-    console.log(data);
+    // console.log(data);
 
-    if (data && data.results) {
-      return data.results;
-    } else {
-      throw new Error("No results found");
-    }
+    return data;
   } catch (error) {
     throw new Error("Failed to fetch images from Unsplash API");
   }

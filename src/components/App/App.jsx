@@ -7,7 +7,10 @@ import { getImages } from "../../apiService/images";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import { LoadMoreBtn } from "../LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "../ImageModal/ImageModal";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
+import Loader from "../Loader/Loader";
+import { LastPage } from "../LastPage/LastPage";
+import { ErrorMessage } from "formik";
 // import { LastPage } from "../LastPage/LastPage";
 // import { ErrorMessage } from "formik";
 
@@ -18,8 +21,8 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  // const [visible, setVisible] = useState(false);
-  // const [totalPages, setTotalPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [visible, setVisible] = useState(false);
 
   const onFormSubmit = (query) => {
     setQuery(query);
@@ -28,7 +31,8 @@ const App = () => {
     setLoading(false);
     setIsError(false);
     setOpenModal(false);
-    // setVisible(false);
+    setTotalPages(1);
+    setVisible(false);
   };
 
   useEffect(() => {
@@ -37,17 +41,15 @@ const App = () => {
     const imagesFromApi = async () => {
       try {
         setLoading(true);
-        const results = await getImages(page, query);
+        const { results, total_pages } = await getImages(page, query);
         console.log(results);
         setImages((prevImages) => [...prevImages, ...results]);
-        // setVisible(images.length === results.total);
-        //setVisible(page < results.total_pages)
+        setTotalPages(total_pages);
+        setIsError(false);
+        //(images.length === results.total);
+        setVisible(page < total_pages);
       } catch (error) {
         setIsError(true);
-        toast.error("Whoops, something went wrong!", {
-          duration: 4000,
-          position: "top-center",
-        });
       } finally {
         setLoading(false);
       }
@@ -71,6 +73,7 @@ const App = () => {
     <>
       <SearchBar onSubmit={onFormSubmit} />
       <ImageGallery images={images} onOpenModal={handleOpenModal} />
+
       {openModal && (
         <ImageModal
           onClose={handleCloseModal}
@@ -82,16 +85,29 @@ const App = () => {
         />
       )}
 
+      {isError && <ErrorMessage />}
+
       {!images.length && <p>Let`s begin search...</p>}
 
-      {loading && <p>Loading data, please wait...</p>}
-      {/* {isError && <ErrorMessage />} */}
+      {loading && (
+        <p>
+          <Loader />
+          Loading data, please wait...
+        </p>
+      )}
+      {/* {Loader works} */}
+
+      {isError && <ErrorMessage />}
+
       {isError && <p>Oops! Something went wrong.</p>}
-      {images.length > 0 && !loading && (
+      {images.length > 0 && visible && (
         <LoadMoreBtn onClick={onLoadMore}>Load more</LoadMoreBtn>
       )}
+      {/* {LoadMore works} */}
+      {/* {Виконується останній true або перший false} */}
 
-      {/* {images.length && page !== total && <LastPage />} */}
+      {page === totalPages && page !== 1 && <LastPage />}
+      {/* {LastPage works} */}
     </>
   );
 };
