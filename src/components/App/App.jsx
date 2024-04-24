@@ -11,8 +11,6 @@ import ImageModal from "../ImageModal/ImageModal";
 import Loader from "../Loader/Loader";
 import { LastPage } from "../LastPage/LastPage";
 import { ErrorMessage } from "formik";
-// import { LastPage } from "../LastPage/LastPage";
-// import { ErrorMessage } from "formik";
 
 const App = () => {
   const [query, setQuery] = useState("");
@@ -21,6 +19,7 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [isOpen, setIsOpen] = useState({ url: "", alt: "" });
   const [totalPages, setTotalPages] = useState(1);
   const [visible, setVisible] = useState(false);
 
@@ -31,6 +30,7 @@ const App = () => {
     setLoading(false);
     setIsError(false);
     setOpenModal(false);
+    setIsOpen({ url: "", alt: "" });
     setTotalPages(1);
     setVisible(false);
   };
@@ -46,8 +46,9 @@ const App = () => {
         setImages((prevImages) => [...prevImages, ...results]);
         setTotalPages(total_pages);
         setIsError(false);
-        //(images.length === results.total);
         setVisible(page < total_pages);
+        // setOpenModal(true);
+        // setIsOpen({ url: results.urls.regular, alt: results.alt_description });
       } catch (error) {
         setIsError(true);
       } finally {
@@ -61,7 +62,9 @@ const App = () => {
     setPage(page + 1);
   };
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (urls, alt_description) => {
+    setIsOpen({ url: urls, alt: alt_description });
+
     setOpenModal(true);
   };
 
@@ -72,16 +75,16 @@ const App = () => {
   return (
     <>
       <SearchBar onSubmit={onFormSubmit} />
-      <ImageGallery images={images} onOpenModal={handleOpenModal} />
+      <ImageGallery images={images} onClick={handleOpenModal} />
 
       {openModal && (
         <ImageModal
+          openModal={openModal}
           onClose={handleCloseModal}
-          images={images}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-          url={images.urls.regular}
-          alt={images.alt_description}
+          // aria-labelledby="modal-modal-title"
+          // aria-describedby="modal-modal-description"
+          url={isOpen.url}
+          alt={isOpen.alt}
         />
       )}
 
