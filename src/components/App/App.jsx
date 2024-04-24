@@ -7,7 +7,6 @@ import { getImages } from "../../apiService/images";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import { LoadMoreBtn } from "../LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "../ImageModal/ImageModal";
-// import toast from "react-hot-toast";
 import Loader from "../Loader/Loader";
 import { LastPage } from "../LastPage/LastPage";
 import { ErrorMessage } from "formik";
@@ -16,8 +15,9 @@ const App = () => {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const [images, setImages] = useState([]);
+  // const [txt, setTxt] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [isOpen, setIsOpen] = useState({ url: "", alt: "" });
   const [totalPages, setTotalPages] = useState(1);
@@ -28,7 +28,7 @@ const App = () => {
     setPage(1);
     setImages([]);
     setLoading(false);
-    setIsError(false);
+    setError("");
     setOpenModal(false);
     setIsOpen({ url: "", alt: "" });
     setTotalPages(1);
@@ -45,12 +45,10 @@ const App = () => {
         console.log(results);
         setImages((prevImages) => [...prevImages, ...results]);
         setTotalPages(total_pages);
-        setIsError(false);
+        setError("");
         setVisible(page < total_pages);
-        // setOpenModal(true);
-        // setIsOpen({ url: results.urls.regular, alt: results.alt_description });
       } catch (error) {
-        setIsError(true);
+        setError(error.ErrorMessage);
       } finally {
         setLoading(false);
       }
@@ -72,14 +70,25 @@ const App = () => {
     setOpenModal(false);
   };
 
+  //Лише букви для введення
+  // const onInputChange = (event) => {
+  //   const { value } = event.target;
+  //   console.log("Input value: ", value);
+
+  //   const re = /^[A-Za-z]+$/;
+  //   if (value === "" || re.test(value)) {
+  //     setTxt(value);
+  //   }
+  // };
+
   return (
     <>
       <SearchBar onSubmit={onFormSubmit} />
-      <ImageGallery images={images} onClick={handleOpenModal} />
+      <ImageGallery images={images} onOpenModal={handleOpenModal} />
 
       {openModal && (
         <ImageModal
-          openModal={openModal}
+          isOpen={openModal}
           onClose={handleCloseModal}
           // aria-labelledby="modal-modal-title"
           // aria-describedby="modal-modal-description"
@@ -88,7 +97,7 @@ const App = () => {
         />
       )}
 
-      {isError && <ErrorMessage />}
+      {error && <ErrorMessage />}
 
       {!images.length && <p>Let`s begin search...</p>}
 
@@ -100,9 +109,6 @@ const App = () => {
       )}
       {/* {Loader works} */}
 
-      {isError && <ErrorMessage />}
-
-      {isError && <p>Oops! Something went wrong.</p>}
       {images.length > 0 && visible && (
         <LoadMoreBtn onClick={onLoadMore}>Load more</LoadMoreBtn>
       )}
