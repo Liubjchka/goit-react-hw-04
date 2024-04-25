@@ -92,7 +92,7 @@ const App = () => {
           onClose={handleCloseModal}
           // aria-labelledby="modal-modal-title"
           // aria-describedby="modal-modal-description"
-          url={isOpen.url}
+          urlLarge={isOpen.url}
           alt={isOpen.alt}
         />
       )}

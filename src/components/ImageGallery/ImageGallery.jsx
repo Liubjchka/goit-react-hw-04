@@ -2,7 +2,7 @@ import ImageCard from "../ImageCard/ImageCard";
 import css from "./ImageGallery.module.css";
 import { AiOutlineLike } from "react-icons/ai";
 
-const ImageGallery = ({ images }) => {
+const ImageGallery = ({ images, onOpenModal }) => {
   return (
     <ul className={css.ul}>
       {images.map(({ id, alt_description, urls, color, likes }) => {
@@ -15,8 +15,10 @@ const ImageGallery = ({ images }) => {
             <ImageCard
               alt={alt_description}
               url={urls.small}
+              urlLarge={urls.regular}
               color={color}
               likes={likes}
+              onOpenModal={onOpenModal}
             />
             <div className={css.info}>
               <p>

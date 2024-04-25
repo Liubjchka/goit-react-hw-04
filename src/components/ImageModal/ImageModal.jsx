@@ -25,17 +25,17 @@ const customStyles = {
   },
 };
 
-const ImageModal = ({ openModal, onClose, url, alt }) => {
+const ImageModal = ({ isOpen, onClose, urlLarge, alt }) => {
   return (
     <div className={css.modalBackdrop}>
       <Modal
         style={customStyles}
-        isOpen={openModal}
+        isOpen={isOpen}
         onClose={onClose}
         className={css.modalContent}
         shouldReturnFocusAfterClose={false}
       >
-        <img src={url} alt={alt} className={css.img} />
+        <img src={urlLarge} alt={alt} className={css.img} />
       </Modal>
     </div>
   );
