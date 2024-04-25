@@ -22,6 +22,7 @@ const App = () => {
   const [isOpen, setIsOpen] = useState({ url: "", alt: "" });
   const [totalPages, setTotalPages] = useState(1);
   const [visible, setVisible] = useState(false);
+  const [empty, setEmpty] = useState(false);
 
   const onFormSubmit = (query) => {
     setQuery(query);
@@ -33,6 +34,7 @@ const App = () => {
     setIsOpen({ url: "", alt: "" });
     setTotalPages(1);
     setVisible(false);
+    setEmpty(false);
   };
 
   useEffect(() => {
@@ -90,8 +92,6 @@ const App = () => {
         <ImageModal
           isOpen={openModal}
           onClose={handleCloseModal}
-          // aria-labelledby="modal-modal-title"
-          // aria-describedby="modal-modal-description"
           urlLarge={isOpen.url}
           alt={isOpen.alt}
         />
@@ -99,7 +99,7 @@ const App = () => {
 
       {error && <ErrorMessage />}
 
-      {!images.length && <p>Let`s begin search...</p>}
+      {!images.length && empty && <p>Let`s begin search...</p>}
 
       {loading && (
         <p>
@@ -108,6 +108,8 @@ const App = () => {
         </p>
       )}
       {/* {Loader works} */}
+
+      {!images.length && !empty && <p>There are no images...</p>}
 
       {images.length > 0 && visible && (
         <LoadMoreBtn onClick={onLoadMore}>Load more</LoadMoreBtn>

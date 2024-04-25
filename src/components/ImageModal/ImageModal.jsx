@@ -1,3 +1,4 @@
+import DisableBodyScroll from "../DisableBodyScroll/DisableBodyScroll";
 import css from "./ImageModal.module.css";
 import Modal from "react-modal";
 
@@ -28,12 +29,17 @@ const customStyles = {
 const ImageModal = ({ isOpen, onClose, urlLarge, alt }) => {
   return (
     <div className={css.modalBackdrop}>
+      <DisableBodyScroll />
       <Modal
         style={customStyles}
         isOpen={isOpen}
-        onClose={onClose}
+        onRequestClose={onClose}
         className={css.modalContent}
-        shouldReturnFocusAfterClose={false}
+        // shouldFocusAfterRender={true}
+        preventScroll={false}
+        shouldCloseOnEsc={true}
+        shouldCloseOnOverlayClick={true}
+        shouldReturnFocusAfterClose={true}
       >
         <img src={urlLarge} alt={alt} className={css.img} />
       </Modal>
@@ -42,3 +48,6 @@ const ImageModal = ({ isOpen, onClose, urlLarge, alt }) => {
 };
 
 export default ImageModal;
+
+//https://reactcommunity.org/react-modal/
+//Modal window
