@@ -27,12 +27,12 @@ const customStyles = {
 
 const ImageModal = ({ isOpen, onClose, urlLarge, alt }) => {
   return (
-    <div className={css.modalBackdrop}>
+    <div>
       <Modal
         style={customStyles}
         isOpen={isOpen}
         onRequestClose={onClose}
-        className={css.modalContent}
+        className={css.modal}
         // shouldFocusAfterRender={true}
         preventScroll={false}
         shouldCloseOnEsc={true}
