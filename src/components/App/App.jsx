@@ -15,7 +15,6 @@ const App = () => {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const [images, setImages] = useState([]);
-  // const [txt, setTxt] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [openModal, setOpenModal] = useState(false);

@@ -1,4 +1,3 @@
-import DisableBodyScroll from "../DisableBodyScroll/DisableBodyScroll";
 import css from "./ImageModal.module.css";
 import Modal from "react-modal";
 
@@ -29,7 +28,6 @@ const customStyles = {
 const ImageModal = ({ isOpen, onClose, urlLarge, alt }) => {
   return (
     <div className={css.modalBackdrop}>
-      <DisableBodyScroll />
       <Modal
         style={customStyles}
         isOpen={isOpen}

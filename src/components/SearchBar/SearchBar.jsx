@@ -27,7 +27,7 @@ const SearchBar = ({ onSubmit }) => {
             value={text}
             onChange={changeText}
             required
-            // autoComplete="off"
+            autoComplete="off"
             autoFocus
           />
           <button className={css.button} type="submit">
