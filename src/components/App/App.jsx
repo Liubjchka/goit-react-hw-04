@@ -72,17 +72,6 @@ const App = () => {
     setOpenModal(false);
   };
 
-  //Лише букви для введення
-  // const onInputChange = (event) => {
-  //   const { value } = event.target;
-  //   console.log("Input value: ", value);
-
-  //   const re = /^[A-Za-z]+$/;
-  //   if (value === "" || re.test(value)) {
-  //     setTxt(value);
-  //   }
-  // };
-
   return (
     <>
       <SearchBar onSubmit={onFormSubmit} />
@@ -98,27 +87,19 @@ const App = () => {
       )}
 
       {error && <ErrorMessage />}
-
       {!images.length && empty && <p>Let`s begin search...</p>}
-
       {loading && (
         <p>
           <Loader />
           Loading data, please wait...
         </p>
       )}
-      {/* {Loader works} */}
-
       {!images.length && !empty && <p>There are no images...</p>}
-
       {images.length > 0 && visible && (
         <LoadMoreBtn onClick={onLoadMore}>Load more</LoadMoreBtn>
       )}
-      {/* {LoadMore works} */}
       {/* {Виконується останній true або перший false} */}
-
       {page === totalPages && page !== 1 && <LastPage />}
-      {/* {LastPage works} */}
     </>
   );
 };
