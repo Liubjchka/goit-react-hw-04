@@ -10,25 +10,26 @@ import ImageModal from "../ImageModal/ImageModal";
 import Loader from "../Loader/Loader";
 import { LastPage } from "../LastPage/LastPage";
 import { ErrorMessage } from "formik";
+import toast, { Toaster } from "react-hot-toast";
 
 const App = () => {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [isOpen, setIsOpen] = useState({ url: "", alt: "" });
   const [totalPages, setTotalPages] = useState(1);
   const [visible, setVisible] = useState(false);
-  const [empty, setEmpty] = useState(false);
+  const [empty, setEmpty] = useState(true);
 
   const onFormSubmit = (query) => {
     setQuery(query);
     setPage(1);
     setImages([]);
     setLoading(false);
-    setError("");
+    setError(false);
     setOpenModal(false);
     setIsOpen({ url: "", alt: "" });
     setTotalPages(1);
@@ -46,10 +47,10 @@ const App = () => {
         console.log(results);
         setImages((prevImages) => [...prevImages, ...results]);
         setTotalPages(total_pages);
-        setError("");
+        setError(false);
         setVisible(page < total_pages);
       } catch (error) {
-        setError(error.ErrorMessage);
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -71,9 +72,19 @@ const App = () => {
     setOpenModal(false);
   };
 
+  const onEmptyString = () => {
+    toast.error("Whoops, something went wrong!", {
+      duration: 4000,
+      position: "top-right",
+    });
+  };
+
   return (
     <>
-      <SearchBar onSubmit={onFormSubmit} />
+      <Toaster reverseOrder={false} />
+      {error && <ErrorMessage />}
+
+      <SearchBar onSubmit={onFormSubmit} onEmpty={onEmptyString} />
       <ImageGallery images={images} onOpenModal={handleOpenModal} />
 
       {openModal && (
@@ -85,7 +96,6 @@ const App = () => {
         />
       )}
 
-      {error && <ErrorMessage />}
       {!images.length && empty && <p>Let`s begin search...</p>}
       {loading && (
         <p>

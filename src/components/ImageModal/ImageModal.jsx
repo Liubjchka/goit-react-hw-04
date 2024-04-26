@@ -12,6 +12,7 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
+    border: "none",
   },
 
   overlay: {
@@ -27,13 +28,12 @@ const customStyles = {
 
 const ImageModal = ({ isOpen, onClose, urlLarge, alt }) => {
   return (
-    <div>
+    <div className={css.modal}>
       <Modal
         style={customStyles}
         isOpen={isOpen}
         onRequestClose={onClose}
-        className={css.modal}
-        // shouldFocusAfterRender={true}
+        shouldFocusAfterRender={true}
         preventScroll={false}
         shouldCloseOnEsc={true}
         shouldCloseOnOverlayClick={true}

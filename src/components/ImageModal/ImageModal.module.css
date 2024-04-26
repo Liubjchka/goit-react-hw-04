@@ -1,5 +1,7 @@
 .modal {
   max-width: 1200px;
+  max-height: 640px;
+  color: black;
 }
 
 .img {

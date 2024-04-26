@@ -2,7 +2,7 @@ import { useState } from "react";
 import css from "./SearchBar.module.css";
 import { FiSearch } from "react-icons/fi";
 
-const SearchBar = ({ onSubmit }) => {
+const SearchBar = ({ onSubmit, onEmpty }) => {
   const [text, setText] = useState("");
 
   function changeText(event) {
@@ -11,6 +11,12 @@ const SearchBar = ({ onSubmit }) => {
 
   function handleSubmit(event) {
     event.preventDefault();
+
+    if (text.trim() === "") {
+      onEmpty();
+      return;
+    }
+
     onSubmit(text);
     setText("");
   }
