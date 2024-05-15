@@ -9,8 +9,9 @@ import { LoadMoreBtn } from "../LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "../ImageModal/ImageModal";
 import Loader from "../Loader/Loader";
 import { LastPage } from "../LastPage/LastPage";
-import { ErrorMessage } from "formik";
 import toast, { Toaster } from "react-hot-toast";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
+
 
 const App = () => {
   const [query, setQuery] = useState("");
@@ -82,10 +83,11 @@ const App = () => {
   return (
     <>
       <Toaster reverseOrder={false} />
-      {error && <ErrorMessage />}
 
       <SearchBar onSubmit={onFormSubmit} onEmpty={onEmptyString} />
       <ImageGallery images={images} onOpenModal={handleOpenModal} />
+
+      {error && <ErrorMessage />}
 
       {openModal && (
         <ImageModal
@@ -96,14 +98,16 @@ const App = () => {
         />
       )}
 
-      {!images.length && empty && <p>Let`s begin search...</p>}
+      {/* {!images.length && empty && <p>Let`s begin search...</p>} */}
       {loading && (
-        <p>
+        <div>
           <Loader />
+          <p>
           Loading data, please wait...
         </p>
+        </div>
       )}
-      {!images.length && !empty && <p>There are no images...</p>}
+      {!images.length && !empty && !loading && <p>There are no images...</p>}
       {images.length > 0 && visible && (
         <LoadMoreBtn onClick={onLoadMore}>Load more</LoadMoreBtn>
       )}
